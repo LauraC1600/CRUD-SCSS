@@ -1,0 +1,89 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+.login {
+  padding: 4rem 0;
+
+  .contenedor {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.login__caja {
+  width: 100%;
+  max-width: 46rem;
+  padding: 3rem 2.5rem;
+  background-color: v.$blanco;
+  border-radius: 1rem;
+  box-shadow: 0 1rem 3rem rgba(v.$negro, 0.15);
+
+  @include m.tablet {
+    padding: 4rem;
+  }
+
+  h2 {
+    margin: 0 0 3rem 0;
+    font-size: 3.2rem;
+    text-align: center;
+    color: v.$azul;
+  }
+}
+
+.login__errores {
+  margin-bottom: 2rem;
+  padding: 1rem 1.5rem;
+  background-color: rgba(v.$rosa, 0.1);
+  border-radius: 0.5rem;
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 1.6rem;
+    color: v.$rosa;
+  }
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  label {
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  input {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-family: inherit;
+    font-size: 1.6rem;
+    border: 0.1rem solid #ccc;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+
+    &:focus {
+      outline: none;
+      border-color: v.$azul;
+      box-shadow: 0 0 0 0.3rem rgba(v.$azul, 0.2);
+    }
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 1.3rem;
+    font-family: inherit;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: v.$blanco;
+    background-color: v.$azul;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: v.$rosa;
+    }
+  }
+}
