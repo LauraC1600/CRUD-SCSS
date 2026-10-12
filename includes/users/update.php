@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../db/funciones.php';
+require_once __DIR__ . '/../../db/validaciones.php';
 require_once __DIR__ . '/get.php';
 
 session_start();
@@ -25,6 +25,7 @@ function actualizar_usuario(int $id, string $name, string $last_name, string $ce
                 email = '$email',
                 telefono = '$telefono'";
 
+    // Solo cambia la contraseña si se envio una nueva (hash no nulo)
     if ($nuevo_hash !== null) {
         $nuevo_hash = mysqli_real_escape_string($conex, $nuevo_hash);
         $sql .= ", contrasena = '$nuevo_hash'";
@@ -56,7 +57,8 @@ $errores = [];
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name      = trim($_POST["name"]);
     $last_name = trim($_POST["last_name"]);
-    $cedula    = trim($_POST["cedula"]);
+    // La cedula va "disabled" en el form (no llega en el POST), se toma de la BD
+    $cedula    = $usuario['cedula'];
     $email     = trim($_POST["email"]);
     $telefono  = trim($_POST["telefono"]);
 
@@ -67,6 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $errores = validar_usuario_actualizar($id, $name, $last_name, $cedula, $email, $telefono);
 
     $nuevo_hash = null;
+    // Si llena alguno de los 3 campos de clave, se exigen los 3
     $quiere_cambiar_pass = !empty($passActual) || !empty($passNueva) || !empty($passConf);
 
     if ($quiere_cambiar_pass) {
@@ -88,10 +91,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($exito) {
             $usuario = ['nombre' => $name, 'apellido' => $last_name, 'cedula' => $cedula, 'email' => $email, 'telefono' => $telefono];
             header('Location: ../../pag/users.php?status=2');
+            exit;
         }
     } else {
         $usuario = ['nombre' => $name, 'apellido' => $last_name, 'cedula' => $cedula, 'email' => $email, 'telefono' => $telefono];
-        header('Location: ../../pag/users.php?status=3');
     }
 }
 ?>
@@ -114,18 +117,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div class="contenedor">
     <h2>Actualizar usuario</h2>
-
-    <?php if (!empty($errores)) { ?>
-        <div style="color: red;">
-            <?php foreach ($errores as $error) { ?>
-                <p><?php echo $error ?></p>
-            <?php } ?>
-        </div>
-    <?php } ?>
-
-    <?php if ($exito): ?>
-        <p>Usuario actualizado correctamente</p>
-    <?php endif; ?>
 
     <form method="POST" action="">
         <label>Nombre:</label>
@@ -159,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     </div>
 
+    <?php $base = '../../'; require __DIR__ . '/../../includes/partials/alertas.php'; ?>
 </body>
 
 </html>

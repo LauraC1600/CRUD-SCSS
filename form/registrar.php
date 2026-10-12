@@ -1,15 +1,18 @@
 <?php
-require_once __DIR__ . '/../db/funciones.php';
-require_once __DIR__ . '/../includes/users/create.php';
 
 session_start();
 if(empty($_SESSION['usuario_id']) ){
- header('Location: ../../index.php');
+ header('Location: ../index.php');
  exit;
 }
 
+require_once __DIR__ . '/../db/validaciones.php';
+require_once __DIR__ . '/../includes/users/create.php';
+
+
 $errores = [];
 $exito = false;
+$mensaje_exito = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name               = trim($_POST["name"]);
@@ -25,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (empty($errores)) {
         $exito = insert_usuario($name, $last_name, $cedula, $email, $passwore, $telefono);
         if ($exito) {
+            $mensaje_exito = 'Usuario agregado correctamente';
             $name = $last_name = $cedula = $email = $passwore = $confirmar_passwore = $telefono = '';
         }
     }
@@ -54,18 +58,6 @@ $usuarios = obtener_usuarios();
 
     <h2>Agregar usuario</h2>
 
-    <?php if (!empty($errores)) { ?>
-        <div>
-            <?php foreach ($errores as $error) { ?>
-                <p><?php echo $error ?></p>
-            <?php } ?>
-        </div>
-    <?php } ?>
-
-
-    <?php if ($exito): ?>
-        <p>se agrego un usuario corerctamente</p>
-    <?php endif; ?>
 
     <form method="POST" action="">
         <label>Nombre:</label>
@@ -94,6 +86,7 @@ $usuarios = obtener_usuarios();
 
     </div>
 
+    <?php $base = '../'; require __DIR__ . '/../includes/partials/alertas.php'; ?>
 </body>
 
 </html>

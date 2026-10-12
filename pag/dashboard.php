@@ -23,12 +23,37 @@ if (empty($_SESSION['usuario_id'])) {
 
     <div class="contenedor">
         <h2>Listado de opciones</h2>
-        <nav>
-            <a href="users.php">Usuarios</a>
-            <a href="socios.php">Socios</a>
-            <a href="barcos.php">Barcos</a>
-            <a href="salidas.php">Salidas</a>
-        </nav>
+        <table class="dashboard">
+            <thead>
+                <tr>
+                    <th>Módulo</th>
+                    <th>Descripción</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="Módulo">Usuarios</td>
+                    <td data-label="Descripción">Administrar los usuarios del sistema</td>
+                    <td data-label="Acción"><a class="dashboard__boton" href="users.php">Ir</a></td>
+                </tr>
+                <tr>
+                    <td data-label="Módulo">Socios</td>
+                    <td data-label="Descripción">Registro y consulta de socios</td>
+                    <td data-label="Acción"><a class="dashboard__boton" href="socios.php">Ir</a></td>
+                </tr>
+                <tr>
+                    <td data-label="Módulo">Barcos</td>
+                    <td data-label="Descripción">Listado de barcos registrados</td>
+                    <td data-label="Acción"><a class="dashboard__boton" href="barcos.php">Ir</a></td>
+                </tr>
+                <tr>
+                    <td data-label="Módulo">Salidas</td>
+                    <td data-label="Descripción">Control de salidas de los barcos</td>
+                    <td data-label="Acción"><a class="dashboard__boton" href="salidas.php">Ir</a></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 

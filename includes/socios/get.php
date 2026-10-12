@@ -1,9 +1,10 @@
 <?php
 
+// function_exists evita redeclarar la funcion si otro archivo ya la definio
 if (!function_exists('obtener_conexion')) {
     function obtener_conexion()
     {
-        global $conex;
+        global $conex; // usa la variable de conexion.php
 
         if (!isset($conex)) {
             require_once __DIR__ . '/../../db/conexion.php';

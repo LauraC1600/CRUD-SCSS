@@ -21,6 +21,7 @@ function delete_user(int $id): bool
 
 
 
+// (int) fuerza a numero, protege el DELETE de valores raros en la URL
 $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
 
 if (!$id) {
@@ -30,7 +31,9 @@ if (!$id) {
 
 if(delete_user($id)){
     header('Location: ../../pag/users.php?status=4');
+    exit;
 
 }else{
     header('Location: ../../pag/users.php?status=5');
+    exit;
 }

@@ -1,13 +1,14 @@
 <?php
 session_start();
 require_once __DIR__ . '/includes/users/get.php';
-require_once __DIR__ . '/db/funciones.php';
+require_once __DIR__ . '/db/validaciones.php';
 
 
 $errores = [];
 $email   = '';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // ?? '' evita error si el campo no llega en el POST
     $email    = trim($_POST["email"]    ?? '');
     $passwore = trim($_POST["passwore"] ?? '');
 
@@ -50,14 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <h2>Iniciar sesión</h2>
 
-        <?php if (!empty($errores)): ?>
-            <div class="login__errores">
-                <?php foreach ($errores as $error): ?>
-                    <p><?= $error ?></p>
-                <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
-
         <form class="login__form" method="POST" action="">
 
             <label>Email:</label>
@@ -76,5 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     </main>
 
+    <?php $base = ''; require __DIR__ . '/includes/partials/alertas.php'; ?>
 </body>
 </html>

@@ -1,9 +1,10 @@
 <?php
 
+// function_exists evita redeclarar la funcion si otro archivo ya la definio
 if (!function_exists('obtener_conexion')) {
     function obtener_conexion()
     {
-        global $conex;
+        global $conex; // usa la variable de conexion.php
 
         if (!isset($conex)) {
             require_once __DIR__ . '/../../db/conexion.php';
@@ -26,9 +27,11 @@ function obtener_usuarios()
 }
 
 
+// $excluir_id (opcional) omite a ese usuario, util al actualizar
 function email_existe(string $email, ?int $excluir_id = null): bool
 {
     $conex = obtener_conexion();
+    // real_escape_string escapa comillas para evitar inyeccion SQL
     $email = mysqli_real_escape_string($conex, $email);
     $sql = "SELECT id FROM usuario WHERE email = '$email'";
     if ($excluir_id !== null) $sql .= " AND id != $excluir_id";
@@ -46,6 +49,7 @@ function cedula_existe(string $cedula, ?int $excluir_id = null): bool
     return mysqli_num_rows($query) > 0;
 }
 
+// array|false: union de tipos (PHP 8), devuelve el usuario o false si falla
 function login(string $email, string $passwore): array|false
 {
     $conex     = obtener_conexion();
@@ -56,6 +60,7 @@ function login(string $email, string $passwore): array|false
 
     if (!$usuario) return false;
 
+    // password_verify compara la clave con el hash guardado en la BD
     if (!password_verify($passwore, $usuario['contrasena'])) return false;
 
     return $usuario;

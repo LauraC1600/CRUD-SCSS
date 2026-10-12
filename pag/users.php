@@ -31,6 +31,7 @@ $usuarios = obtener_usuarios();
 
     <?php
 
+    // Codigos de status que llegan por URL y su mensaje para SweetAlert
     $mensajes_status = [
         2 => ['ok', 'Usuario actualizado correctamente.'],
         3 => ['error', 'No se pudo actualizar: revisa los datos del formulario.'],
@@ -38,11 +39,9 @@ $usuarios = obtener_usuarios();
         5 => ['error', 'No se pudo eliminar el usuario.'],
     ];
     $status = isset($_GET['status']) ? (int) $_GET['status'] : 0;
-    if (isset($mensajes_status[$status])):
-        [$tipo, $texto] = $mensajes_status[$status];
+    // ?? null: si el codigo no existe, no muestra alerta
+    $mensaje_status = $mensajes_status[$status] ?? null;
     ?>
-        <p style="color: <?= $tipo === 'ok' ? 'green' : 'red' ?>;"><?= $texto ?></p>
-    <?php endif; ?>
 
     <a href="../form/registrar.php">Nuevo Usuario</a>
     <table>
@@ -76,6 +75,7 @@ $usuarios = obtener_usuarios();
         </tbody>
     </table>
     </div>
+    <?php $base = '../'; require __DIR__ . '/../includes/partials/alertas.php'; ?>
 </body>
 
 </html>

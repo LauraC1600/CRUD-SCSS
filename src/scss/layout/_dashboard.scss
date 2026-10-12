@@ -1,0 +1,88 @@
+@use "../base/variables" as v;
+@use "../base/mixins" as m;
+
+.dashboard {
+  width: 100%;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  background-color: v.$blanco;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 1rem 3rem rgba(v.$negro, 0.15);
+
+  thead {
+    display: none;
+
+    @include m.tablet {
+      display: table-header-group;
+    }
+  }
+
+  th {
+    padding: 1.5rem 2rem;
+    font-size: 1.6rem;
+    text-align: left;
+    color: v.$blanco;
+    background-color: v.$azul;
+  }
+
+  tr {
+    display: block;
+    padding: 1rem 0;
+    border-bottom: 0.1rem solid #e5e5e5;
+
+    @include m.tablet {
+      display: table-row;
+      padding: 0;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: rgba(v.$azul, 0.08);
+    }
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 2rem;
+    font-size: 1.6rem;
+
+    &::before {
+      content: attr(data-label);
+      font-weight: 700;
+      color: v.$azul;
+    }
+
+    @include m.tablet {
+      display: table-cell;
+      padding: 1.5rem 2rem;
+
+      &::before {
+        content: none;
+      }
+    }
+
+    &:first-child {
+      font-weight: 700;
+    }
+  }
+}
+
+.dashboard__boton {
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: v.$blanco;
+  background-color: v.$azul;
+  border-radius: 0.5rem;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: v.$rosa;
+  }
+}

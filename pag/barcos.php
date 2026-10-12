@@ -37,6 +37,7 @@ $barcos = obtener_barcos();
                 <th>Amarre</th>
                 <th>Cuota</th>
                 <th>Socio</th>
+                <th>Accion</th>
             </tr>
         </thead>
         <tbody>
@@ -49,6 +50,8 @@ $barcos = obtener_barcos();
                     <td><?php echo $barco["n_amarre"] ?></td>
                     <td><?php echo $barco["cuota_amarre"] ?></td>
                     <td><?php echo $barco["socio_nombres"] . ' ' . $barco["socio_apellidos"] ?></td>
+                    <!-- urlencode codifica la matricula para usarla segura en la URL -->
+                    <td><a href="../form/salida.php?matricula=<?php echo urlencode($barco["matricula"]); ?>">Dar salida</a></td>
                 </tr>
             <?php  }
             ?>

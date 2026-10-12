@@ -1,0 +1,114 @@
+@use "../base/variables" as v;
+
+// Sobreescribe el diseño por defecto de SweetAlert2 (build/js/sweetalert2.all.min.js)
+// para que combine con la tipografia y los colores del proyecto.
+// Usa !important porque SweetAlert2 inyecta su propio <style> en el DOM despues de
+// que este app.css ya se cargo; sin !important, su estilo inyectado gana el empate.
+
+.swal2-popup {
+  font-family: v.$fuente_principal !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 1rem 3rem rgba(v.$negro, 0.15) !important;
+}
+
+.swal2-title {
+  color: v.$azul !important;
+  font-size: 2.4rem !important;
+  font-weight: 900 !important;
+}
+
+.swal2-html-container {
+  font-family: v.$fuente_principal !important;
+  font-size: 1.6rem !important;
+}
+
+.swal2-confirm {
+  font-family: v.$fuente_principal !important;
+  background-color: v.$azul !important;
+  border-radius: 0.5rem !important;
+  font-weight: 700 !important;
+  box-shadow: none !important;
+  transition: background-color 0.3s !important;
+
+  &:hover {
+    background-color: v.$rosa !important;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.3rem rgba(v.$azul, 0.3) !important;
+  }
+}
+
+.swal2-cancel {
+  font-family: v.$fuente_principal !important;
+  border-radius: 0.5rem !important;
+}
+
+// Reusa el mismo lenguaje de color que .login__errores: rosa = error, azul = exito/info
+.swal2-icon.swal2-success {
+  border-color: v.$azul !important;
+
+  .swal2-success-ring {
+    border-color: rgba(v.$azul, 0.3) !important;
+  }
+
+  [class^="swal2-success-line"] {
+    background-color: v.$azul !important;
+  }
+}
+
+.swal2-icon.swal2-error {
+  border-color: v.$rosa !important;
+
+  [class^="swal2-x-mark-line"] {
+    background-color: v.$rosa !important;
+  }
+}
+
+// Toasts (las notificaciones de error que salen una por una en la esquina)
+.swal2-toast {
+  font-family: v.$fuente_principal !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 0.4rem 1.2rem rgba(v.$negro, 0.15) !important;
+
+  .swal2-title {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: v.$negro !important;
+  }
+
+  &.swal2-icon-error {
+    border-left: 0.4rem solid v.$rosa !important;
+  }
+
+  &.swal2-icon-success {
+    border-left: 0.4rem solid v.$azul !important;
+  }
+}
+
+// SweetAlert2 expone la animacion del toast como variable CSS (--swal2-toast-*-animation).
+// La por defecto mueve y rota el toast (rotateZ) dando un efecto de "bamboleo".
+// Aqui la reemplazamos por un fundido simple, sin rotacion, mas corto.
+// !important es necesario porque la libreria declara estas mismas variables en :root
+// dentro de su propio <style>, inyectado despues de que este app.css ya se cargo.
+:root {
+  --swal2-toast-show-animation: alertas-toast-mostrar 0.25s ease-out !important;
+  --swal2-toast-hide-animation: alertas-toast-ocultar 0.15s ease-in forwards !important;
+}
+
+@keyframes alertas-toast-mostrar {
+  from {
+    opacity: 0;
+    transform: translateY(-0.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes alertas-toast-ocultar {
+  to {
+    opacity: 0;
+  }
+}

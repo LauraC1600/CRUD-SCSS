@@ -1,9 +1,10 @@
 <?php
 
+// function_exists evita redeclarar la funcion si otro archivo ya la definio
 if (!function_exists('obtener_conexion')) {
     function obtener_conexion()
     {
-        global $conex;
+        global $conex; // usa la variable de conexion.php
 
         if (!isset($conex)) {
             require_once __DIR__ . '/../../db/conexion.php';
@@ -22,6 +23,7 @@ function insert_usuario(string $name, string $last_name, string $cedula, string 
         $last_name = mysqli_real_escape_string($conex, $last_name);
         $cedula    = mysqli_real_escape_string($conex, $cedula);
         $email     = mysqli_real_escape_string($conex, $email);
+        // password_hash guarda la clave encriptada (bcrypt), nunca en texto plano
         $passwore  = mysqli_real_escape_string($conex, password_hash($passwore, PASSWORD_BCRYPT));
         $telefono  = mysqli_real_escape_string($conex, $telefono);
 
